@@ -1,0 +1,188 @@
+:root {
+    --primary-color: #2A9D8F;   /* Verde azulado */
+    --secondary-color: #264653; /* Azul oscuro */
+    --accent-color: #E9C46A;    /* Amarillo mostaza */
+    --danger-color: #E76F51;    /* Coral */
+    --light-bg: #F8F9FA;        /* Gris claro */
+    --text-dark: #2B2D42;       /* Azul casi negro */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+/* Contenedores principales */
+.BotonesPrincipales {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+}
+
+.paginador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+/* Grid de pictogramas */
+.pictogramas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Imágenes */
+.pictograma {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pictograma:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Botones generales */
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* Botones específicos */
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #22867A;
+}
+
+/* Botones de paginación */
+.paginador > button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+}
+
+/* Botón Peligro */
+button[type="submit"].danger {
+    background-color: var(--danger-color);
+}
+
+/* Estilos para las imágenes seleccionadas */
+.imagenes_seleccionadas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+}
+
+.imagenes_seleccionadas img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.imagenes_seleccionadas button {
+    background-color: #ff3b2f;
+    padding: 5px 10px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+
+/* Formularios */
+form {
+    max-width: 1200px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0.5rem 0;
+}
+
+/* Accesibilidad */
+#hablar-btn {
+    background-color: var(--accent-color);
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    display: block;
+    margin: 2rem auto;
+}
+
+#hablar-btn:focus {
+    outline: 3px solid var(--secondary-color);
+}
+
+/* Tarjetas de gestión */
+.Subir, .Borrar, .subir_categoria {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 2rem auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .pictogramas {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .pictograma {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .BotonesPrincipales {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar Categorias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='desktop.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('index')}}">
+        <button>Inicio</button>
+    </a>
+    <div class="categorias">
+        {% for categorias in resultados %}
+            <a href="{{ url_for('categorias', categoria=categorias[0] )}}">
+                <img src="{{ url_for('static', filename=categorias[1]) }}" alt="categoria" class="pictograma">
+            </a>
+        {% endfor %}
+    </div>
+</body>
+</html>

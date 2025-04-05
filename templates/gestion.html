@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='desktop.css') }}">
+    <title>Gestionar pictogramas</title>
+</head>
+<body>
+    <a href="{{ url_for('index')}}">
+        <button>Inicio</button>
+    </a>
+    {% if action == 'subir' %}
+        <div class="Subir">
+            <h1>Subir píctogramas</h1>
+            <form action="{{ url_for('gestion', action='subir') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" placeholder="Seleccione una imagen" required>
+                <input type="text" name="significado" placeholder="Ingrese el significado" required>
+                <input type="text" name="categoria" placeholder="Ingrese la categoria" required>
+                <button type="submit">Subir Pictograma</button>
+                <p>{{ mensaje }}</p>
+            </form>
+        </div>
+    {% elif action == 'borrar' %}
+        <div class="Borrar">
+            <h1>Borrar pictogramas</h1>
+            <form action="{{ url_for('gestion', action='borrar') }}" method="post">
+                <input type="number" name="id" placeholder="Ingrese el id" required>
+                <button type="submit">Borrar pictograma</button>
+                <p>{{ mensaje }}</p>
+            </form>
+        </div>
+    {% elif action == 'subir_categoria' %}
+        <div class="subir_categoria">
+            <form action="{{ url_for('gestion', action='subir_categoria') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" placeholder="Seleccione una imagen" required>
+                <input type="text" name="nombre" placeholder="Ingrese el nombre de la categoria" required>
+                <button type="submit">Subir Categoria</button>
+                <p>{{ mensaje }}</p>
+            </form>
+        </div>
+    {% else %}
+        <p>{{ mensaje }}</p>
+    {% endif %}
+</body>
+</html>

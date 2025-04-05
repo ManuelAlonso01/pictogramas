@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='desktop.css') }}">
+    <title>Pictogramas</title>
+</head>
+<body>
+    <div class="BotonesPrincipales">
+        <a href="{{ url_for('mostrar_categorias') }}">
+            <button>Categorias</button>
+        </a>
+        <a href="{{ url_for('gestion', action='subir')}}">
+            <button>Subir pictogramas</button>
+        </a>
+        <a href="{{ url_for('gestion', action='borrar')}}">
+            <button>Borrar Pictogramas</button>
+        </a>
+        <a href="{{ url_for('gestion', action='subir_categoria')}}">
+            <button>Subir Categorias</button>
+        </a>
+    </div>
+    <div class="paginador">
+        <button onclick="anteriorPagina()">←</button>
+        <div class="pictogramas" id="contenedor-pictogramas">
+            {% for pictograma in resultados %}
+                <img src="{{ url_for('static', filename=pictograma[1]) }}" 
+                     alt="pictograma" 
+                     class="pictograma" 
+                     data-id="{{ pictograma[0] }}" 
+                     onclick="seleccionarImagen(this)">
+            {% endfor %}
+        </div>
+        <button onclick="siguientePagina()">→</button>
+    </div>
+    
+
+    <div class="imagenes_seleccionadas">
+        <h2>Imágenes seleccionadas</h2>
+    </div>
+
+    <form id="formulario" action="{{ url_for('index') }}" method="POST">
+        <input type="hidden" name="imagenes_seleccionadas" id="imagenes_seleccionadas_input">
+        <button type="submit">Hablar</button>
+    </form>
+
+    {% if oracion %}
+        <p id="oracion" style="display:none;">{{ oracion }}</p>
+    {% endif %}
+
+    <script>
+        const pictogramas = document.querySelectorAll('.pictograma');
+        const porPagina = 6;
+        let paginaActual = 0;
+
+        function mostrarPagina(pagina) {
+            pictogramas.forEach((img, i) => {
+                img.style.display = (i >= pagina * porPagina && i < (pagina + 1) * porPagina) ? 'block' : 'none';
+            });
+        }
+
+        function siguientePagina() {
+            if ((paginaActual + 1) * porPagina < pictogramas.length) {
+                paginaActual++;
+                mostrarPagina(paginaActual);
+            }
+        }
+
+        function anteriorPagina() {
+            if (paginaActual > 0) {
+                paginaActual--;
+                mostrarPagina(paginaActual);
+            }
+        }
+
+        // Mostrar la primera página al cargar
+        mostrarPagina(paginaActual);
+            var imagenesSeleccionadas = [];
+
+        function cargarOracionDesdeLocalStorage() {
+            var oracionGuardada = localStorage.getItem("ultimaOracion");
+            if (oracionGuardada) {
+                imagenesSeleccionadas = oracionGuardada.split(",");
+                imagenesSeleccionadas.forEach(id => {
+                    var imagenElement = document.querySelector(`[data-id='${id}']`);
+                    if (imagenElement) {
+                        agregarImagenSeleccionada(imagenElement);
+                    }
+                });
+            }
+        }
+
+        function seleccionarImagen(imagenElement) {
+            var idImagen = imagenElement.getAttribute("data-id");
+
+            if (!imagenesSeleccionadas.includes(idImagen)) {
+                imagenesSeleccionadas.push(idImagen);
+                agregarImagenSeleccionada(imagenElement);
+            }
+        }
+
+        function agregarImagenSeleccionada(imagenElement) {
+            var idImagen = imagenElement.getAttribute("data-id");
+
+            var divImagenSeleccionada = document.createElement("div");
+            divImagenSeleccionada.setAttribute("data-id", idImagen);
+
+            var imagenSeleccionada = document.createElement("img");
+            imagenSeleccionada.src = imagenElement.src;
+            imagenSeleccionada.alt = "Imagen seleccionada";
+
+            var btnEliminar = document.createElement("button");
+            btnEliminar.innerHTML = "X";
+            btnEliminar.onclick = function() {
+                eliminarImagen(idImagen, divImagenSeleccionada);
+            };
+
+            divImagenSeleccionada.appendChild(imagenSeleccionada);
+            divImagenSeleccionada.appendChild(btnEliminar);
+            document.querySelector(".imagenes_seleccionadas").appendChild(divImagenSeleccionada);
+        }
+
+        function eliminarImagen(idImagen, divImagen) {
+            imagenesSeleccionadas = imagenesSeleccionadas.filter(id => id !== idImagen);
+            divImagen.remove();
+        }
+
+        document.getElementById("formulario").onsubmit = function(event) {
+            document.getElementById("imagenes_seleccionadas_input").value = imagenesSeleccionadas.join(",");
+            localStorage.setItem("ultimaOracion", imagenesSeleccionadas.join(",")); // Sobreescribimos la última oración
+        };
+
+        // Cargar la última oración al iniciar la página
+        window.onload = cargarOracionDesdeLocalStorage;
+
+        // Función para hablar
+        function hablarTexto() {
+            var oracionTexto = document.getElementById("oracion")?.textContent;
+            if (oracionTexto) {
+                var speech = new SpeechSynthesisUtterance(oracionTexto);
+                speech.lang = "es-ES";  // Configura el idioma
+                speech.rate = 1;  // Velocidad normal
+                window.speechSynthesis.speak(speech);
+            }
+        }
+
+        // Llamar a hablarTexto() si hay una oración generada
+        if (document.getElementById("oracion")) {
+            hablarTexto();
+        }
+    </script>
+</body>
+</html>
