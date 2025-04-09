@@ -19,6 +19,8 @@ Aplicación web para crear y gestionar pictogramas con funcionalidad de síntesi
 - Persistencia de selecciones (localStorage)
 - Paginación de resultados
 - Gestión mediante base de datos SQLite
+## Captura del proyecto
+<img src="https://github.com/ManuelAlonso2006/pictogramas/blob/main/captura.png" alt="profile">
 
 ## Tecnologías Utilizadas 🛠️
 - Python 3.8+
