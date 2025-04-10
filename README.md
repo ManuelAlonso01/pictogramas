@@ -1,6 +1,6 @@
 
 # Web de Pictogramas
-https://pictogramas-production.up.railway.app/
+https://pictogramas.up.railway.app/
 
 # Sistema de Pictogramas con Síntesis de Voz 🗣️🖼️
 
