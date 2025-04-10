@@ -12,16 +12,16 @@ def index():
     if request.method == "POST":
         # Obtener los IDs de las imágenes seleccionadas del formulario
         imagenes_seleccionadas = request.form['imagenes_seleccionadas'].split(',')
-        
-        # Obtener los significados de las imágenes
-        significados = obtener_significado(imagenes_seleccionadas)
+        if imagenes_seleccionadas[0] != '':
+            # Obtener los significados de las imágenes
+            significados = obtener_significado(imagenes_seleccionadas)
 
-        # Crear la oración concatenando los significados
-        oracion = " ".join(significados)
+            # Crear la oración concatenando los significados
+            oracion = " ".join(significados)
 
-        # Cargar pictogramas y mostrar la oración en el frontend
-        resultados = ver_pictogramas()
-        return render_template('index.html', resultados=resultados, oracion=oracion)
+            # Cargar pictogramas y mostrar la oración en el frontend
+            resultados = ver_pictogramas()
+            return render_template('index.html', resultados=resultados, oracion=oracion)
 
     # Si es un GET, solo mostrar los pictogramas
     resultados = ver_pictogramas()
@@ -72,4 +72,4 @@ def categorias(categoria):
     return render_template('categorias.html', resultados=resultados)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=5000)
