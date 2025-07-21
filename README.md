@@ -85,4 +85,4 @@ Interfaz Principal:
     2)Última oración generada almacenada localmente
 
 
-## Desarrollado por ManuelAlonso2006 <img src="https://github.com/ManuelAlonso2006/pictogramas/blob/main/profile.png" alt="profile" width="30">
+## Desarrollado por ManuelAlonso2006 <img src="https://github.com/ManuelAlonso01/pictogramas/blob/main/profile.png" alt="profile" width="30">
